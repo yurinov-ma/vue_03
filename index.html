@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Изучаем Vue 3</title>
+    <meta charset="utf-8" />
+    <style>
+        p{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-on:input="setMessage" />
+    <p>{{message}}</p>
+    <p>Name: {{ name }}</p>
+    <p>Age: {{ age }}</p>
+    <p>{{ welcome() }}</p>
+    <p>{{ displayUser() }}</p>
+    <a v-bind:href="link" v-bind:title="title">{{text}}</a>
+    <p></p>
+    <button v-on:click="increase(1), inform()">+</button>
+    <span>{{ counter }}</span>
+    <div>{{ status }}</div>
+    <input type="number" v-model="number" />
+    <p v-if="number==1">Один</p>
+    <p v-else-if="number==2">Два</p>
+    <p v-else-if="number>2 && number<7">Несколько</p>
+    <p v-else>Много</p>
+    <ul>
+        <li v-for="user in users">
+            <p>Имя: {{user.name}}</p>
+            <p>Возраст: {{user.age}}</p>
+        </li>
+    </ul>
+    <ul>
+        <li v-for="phone in phones">
+            <p>{{ phone }}</p>
+        </li>
+    </ul>
+    <button v-on:click="updateList">Обновить</button>
+</div>
+<script src="https://unpkg.com/vue"></script>
+<script>
+    Vue.createApp({
+        data() {
+            return {
+                message: 'Hello Vue 3!',
+                name: 'Tom',
+                age: 36,
+                text: 'Google',
+                title: 'google.com',
+                link:'https://google.com',
+                counter:0,
+                status:'',
+                number: 1,
+                users: [
+                    {name:'Tom', age:22},
+                    {name:'Bob', age:31},
+                    {name: 'Sam', age:28}
+                ],
+                phones: ['iPhone 12', 'Galaxy S20', 'Nokia N9', 'Xiaomi Mi10']
+            }
+        },
+        mounted() {
+            // получение данных
+            console.log(this.age);    // 36
+            // изменение данных
+            this.age = 25;
+            console.log(this.age);    // 25
+        },
+        methods: {
+            setMessage(event) {
+                this.message = event.target.value;
+            },
+            welcome(){
+                return "Welcome " + this.name;
+            },
+            displayUser() {
+                return "UserInfo: name " + this.name + "  age " + this.age;
+            },
+            increase(n){
+                this.counter = this.counter + n;
+            },
+            inform(){
+                this.status = "Время нажатия кнопки: " + new Date().toLocaleString();
+            },
+            updateList(){
+                this.phones = this.phones.slice(1,3);
+            }
+        }
+    }).mount('#app');
+</script>
+</body>
+</html>
